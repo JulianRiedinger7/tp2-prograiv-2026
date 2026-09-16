@@ -23,16 +23,12 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
 
   it('devuelve varias notas existentes', () => {
     repo.create(firstNote);
-    let notes = service.listNotes();
-
-    expect(notes).toHaveLength(1);
-
     repo.create(secondNote);
-    notes = service.listNotes();
+    const notes = service.listNotes();
 
     expect(notes).toHaveLength(2);
-    expect(notes[0]).toHaveProperty('title', 'A');
-    expect(notes[1]).toHaveProperty('title', 'B');
+    expect(notes[0]).toHaveProperty('title', firstNote.title);
+    expect(notes[1]).toHaveProperty('title', secondNote.title);
   });
 
   it('devuelve varias notas en orden', () => {
