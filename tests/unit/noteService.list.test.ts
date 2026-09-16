@@ -43,4 +43,16 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
     expect(notes[0]).toHaveProperty('id', 1);
     expect(notes[1]).toHaveProperty('id', 2);
   });
+
+  it('devuelve notas con todas las propiedades', () => {
+    repo.create(firstNote);
+    const notes = service.listNotes();
+
+    expect(notes[0]).toHaveProperty('id');
+    expect(notes[0]).toHaveProperty('title');
+    expect(notes[0]).toHaveProperty('content');
+    expect(notes[0]).toHaveProperty('pinned');
+    expect(notes[0]).toHaveProperty('createdAt');
+    expect(notes[0]).toHaveProperty('updatedAt');
+  });
 });
