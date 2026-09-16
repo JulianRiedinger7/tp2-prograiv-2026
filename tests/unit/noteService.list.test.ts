@@ -7,6 +7,8 @@ import { NewNote } from '../../src/models/Note';
 describe('NoteService - listNotes (Ejercicio 2)', () => {
   let service: NoteServiceImpl;
   let repo: SqliteNoteRepository;
+  const firstNote: NewNote = { title: 'A', content: 'B' };
+  const secondNote: NewNote = { title: 'B', content: 'C' };
 
   beforeEach(() => {
     const db = createDb(':memory:');
@@ -20,9 +22,6 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
   });
 
   it('devuelve varias notas existentes', () => {
-    const firstNote: NewNote = { title: 'A', content: 'B' };
-    const secondNote: NewNote = { title: 'B', content: 'C' };
-
     repo.create(firstNote);
     let notes = service.listNotes();
 
@@ -34,5 +33,14 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
     expect(notes).toHaveLength(2);
     expect(notes[0]).toHaveProperty('title', 'A');
     expect(notes[1]).toHaveProperty('title', 'B');
+  });
+
+  it('devuelve varias notas en orden', () => {
+    repo.create(firstNote);
+    repo.create(secondNote);
+    const notes = service.listNotes();
+
+    expect(notes[0]).toHaveProperty('id', 1);
+    expect(notes[1]).toHaveProperty('id', 2);
   });
 });
