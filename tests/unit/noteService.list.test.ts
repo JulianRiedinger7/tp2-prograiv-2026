@@ -2,18 +2,37 @@ import { beforeEach, describe, it, expect } from 'vitest';
 import { createDb } from '../../src/db/connection';
 import { SqliteNoteRepository } from '../../src/repositories/NoteRepository';
 import { NoteServiceImpl } from '../../src/services/NoteService';
+import { NewNote } from '../../src/models/Note';
 
-describe('NoteService - listNotes', () => {
+describe('NoteService - listNotes (Ejercicio 2)', () => {
   let service: NoteServiceImpl;
+  let repo: SqliteNoteRepository;
 
   beforeEach(() => {
     const db = createDb(':memory:');
-    const repo = new SqliteNoteRepository(db);
+    repo = new SqliteNoteRepository(db);
     service = new NoteServiceImpl(repo);
   });
 
   it('inicializa con lista vacia', () => {
     const notes = service.listNotes();
     expect(notes).toHaveLength(0);
+  });
+
+  it('devuelve varias notas existentes', () => {
+    const firstNote: NewNote = { title: 'A', content: 'B' };
+    const secondNote: NewNote = { title: 'B', content: 'C' };
+
+    repo.create(firstNote);
+    let notes = service.listNotes();
+
+    expect(notes).toHaveLength(1);
+
+    repo.create(secondNote);
+    notes = service.listNotes();
+
+    expect(notes).toHaveLength(2);
+    expect(notes[0]).toHaveProperty('title', 'A');
+    expect(notes[1]).toHaveProperty('title', 'B');
   });
 });
