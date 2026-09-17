@@ -29,3 +29,22 @@ describe('GET /notes/:id - Ejercicio 3', () => {
     expect(res.body).toHaveProperty('pinned', false);
   });
 });
+
+describe ('PATCH/notes/:id - Ejercicio 4', () => {
+  let app: Express;
+  beforeEach(() => {app = makeApp(':memory:');});
+
+  it ('Update nota con título', async () => {
+    const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+    const createRes = await request(app).post('/notes').send(NewNote);
+    const id = createRes.body.id;
+
+    const tituloNuevo = 'NUEVO TÍTULO';
+    const res = await request(app)
+      .patch(`/notes/${id}`)
+      .send({title: tituloNuevo});
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('title', tituloNuevo);
+      expect(res.body).toHaveProperty('content', NewNote.content); 
+    });});
