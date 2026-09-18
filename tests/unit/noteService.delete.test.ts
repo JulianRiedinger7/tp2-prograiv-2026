@@ -18,8 +18,9 @@ describe ('NoteService delete Note - Ejericio 5', () => {
         const notaNueva: NewNote = {title: 'TÍTULO', content: 'CONTENIDO'};
         const notaCreada = service.createNote(notaNueva);
 
-        const notaParaEliminar= service.deleteNote(notaCreada.id);
-        
-    });
+        const notaEliminada= service.deleteNote(notaCreada.id);
+        expect(notaEliminada).toBe(true);
+        expect (service.getNote(notaCreada.id)).toBeUndefined();
 
+    });
 });
