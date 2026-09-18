@@ -63,5 +63,16 @@ describe ('PATCH/notes/:id - Ejercicio 4', () => {
       expect (respuesta.body).toHaveProperty('content', contenidoNuevo);
       expect(respuesta.body).toHaveProperty('title', NewNote.title);
     }); 
+
+    it ('Delete nota por id', async () => {
+      const notaNueva: NewNote = {title: 'TITULO', content: 'CONTENIDO'};
+      const createRespuesta= await request(app).post('/notes').send(notaNueva);
+      const id = createRespuesta.body.id;
+
+      const respuesta = await request(app)
+        .delete(`/notes/${id}`)
+        
+      expect(respuesta.statusCode).toBe(204);
+    });
   
   });
