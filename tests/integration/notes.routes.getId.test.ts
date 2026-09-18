@@ -29,3 +29,39 @@ describe('GET /notes/:id - Ejercicio 3', () => {
     expect(res.body).toHaveProperty('pinned', false);
   });
 });
+
+describe ('PATCH/notes/:id - Ejercicio 4', () => {
+  let app: Express;
+  beforeEach(() => {app = makeApp(':memory:');});
+
+  it ('Update nota con título', async () => {
+    const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+    const createRespuesta = await request(app).post('/notes').send(NewNote);
+    const id = createRespuesta.body.id;
+
+    const tituloNuevo = 'NUEVO TÍTULO';
+    const respuesta = await request(app)
+      .patch(`/notes/${id}`)
+      .send({title: tituloNuevo});
+
+      expect(respuesta.statusCode).toBe(200);
+      expect(respuesta.body).toHaveProperty('title', tituloNuevo);
+      expect(respuesta.body).toHaveProperty('content', NewNote.content); 
+    });
+
+    it ('Update nota ccon contenido', async () => {
+      const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+      const createRespuesta = await request(app).post('/notes').send(NewNote);
+      const id = createRespuesta.body.id;
+
+      const contenidoNuevo = 'CONTENIDO NUEVO';
+      const respuesta = await request(app)
+        .patch(`/notes/${id}`)
+        .send({content: contenidoNuevo});
+      
+      expect(respuesta.statusCode).toBe(200);
+      expect (respuesta.body).toHaveProperty('content', contenidoNuevo);
+      expect(respuesta.body).toHaveProperty('title', NewNote.title);
+    }); 
+  
+  });
