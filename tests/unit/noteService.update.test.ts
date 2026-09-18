@@ -25,5 +25,15 @@ describe ('noteService - updateNote (Ejercicio 4)', () => {
         expect(updated).toBeDefined();
         expect(updated).toHaveProperty('title', titleNuevo);  
     })
-}
-);
+
+    it ('Ingreso nota por id y le cambio el contenido', () => {
+        const NewNote: NewNote={title: 'TITULO', content: 'CONTENT'};
+        const notaCreada = service.createNote(NewNote);
+
+        const contenidoNuevo = 'CONTENIDO NUEVO';
+        const updated = service.updateNote(notaCreada.id, {content: contenidoNuevo});
+
+        expect(updated).toBeDefined();
+        expect(updated).toHaveProperty('content', contenidoNuevo);
+    });
+});

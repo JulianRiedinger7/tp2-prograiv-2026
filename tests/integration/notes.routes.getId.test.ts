@@ -36,15 +36,32 @@ describe ('PATCH/notes/:id - Ejercicio 4', () => {
 
   it ('Update nota con título', async () => {
     const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
-    const createRes = await request(app).post('/notes').send(NewNote);
-    const id = createRes.body.id;
+    const createRespuesta = await request(app).post('/notes').send(NewNote);
+    const id = createRespuesta.body.id;
 
     const tituloNuevo = 'NUEVO TÍTULO';
-    const res = await request(app)
+    const respuesta = await request(app)
       .patch(`/notes/${id}`)
       .send({title: tituloNuevo});
 
-      expect(res.statusCode).toBe(200);
-      expect(res.body).toHaveProperty('title', tituloNuevo);
-      expect(res.body).toHaveProperty('content', NewNote.content); 
-    });});
+      expect(respuesta.statusCode).toBe(200);
+      expect(respuesta.body).toHaveProperty('title', tituloNuevo);
+      expect(respuesta.body).toHaveProperty('content', NewNote.content); 
+    });
+
+    it ('Update nota ccon contenido', async () => {
+      const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+      const createRespuesta = await request(app).post('/notes').send(NewNote);
+      const id = createRespuesta.body.id;
+
+      const contenidoNuevo = 'CONTENIDO NUEVO';
+      const respuesta = await request(app)
+        .patch(`/notes/${id}`)
+        .send({content: contenidoNuevo});
+      
+      expect(respuesta.statusCode).toBe(200);
+      expect (respuesta.body).toHaveProperty('content', contenidoNuevo);
+      expect(respuesta.body).toHaveProperty('title', NewNote.title);
+    }); 
+  
+  });
