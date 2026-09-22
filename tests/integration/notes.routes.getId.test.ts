@@ -2,7 +2,7 @@ import request from 'supertest';
 import { makeApp } from '../../src/app';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { Express } from 'express';
-import { NewNote } from '../../src/models/Note';
+import { NewNote, NotePatch } from '../../src/models/Note';
 
 describe('GET /notes/:id - Ejercicio 3', () => {
   let app: Express;
@@ -35,7 +35,7 @@ describe ('PATCH/notes/:id - Ejercicio 4', () => {
   beforeEach(() => {app = makeApp(':memory:');});
 
   it ('Update nota con título', async () => {
-    const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+    const NewNote: NotePatch = {title: 'Titulo', content: 'Contenido'};
     const createRespuesta = await request(app).post('/notes').send(NewNote);
     const id = createRespuesta.body.id;
 
@@ -50,7 +50,7 @@ describe ('PATCH/notes/:id - Ejercicio 4', () => {
     });
 
     it ('Update nota con contenido', async () => {
-      const NewNote: NewNote = {title: 'Titulo', content: 'Contenido'};
+      const NewNote: NotePatch = {title: 'Titulo', content: 'Contenido'};
       const createRespuesta = await request(app).post('/notes').send(NewNote);
       const id = createRespuesta.body.id;
 
