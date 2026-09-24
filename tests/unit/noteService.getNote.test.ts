@@ -22,7 +22,7 @@ describe('NoteService - getNote (Ejercicio 3)', () => {
 
   it('nota con id existente la retorna correctamente', () => {
     const newNote: NewNote = { title: 'ABC', content: 'DEF' };
-    repo.create(newNote);
+    service.createNote(newNote);
 
     const note = service.getNote(1);
     expect(note).toBeDefined();

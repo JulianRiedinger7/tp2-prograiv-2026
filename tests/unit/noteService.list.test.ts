@@ -22,8 +22,8 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
   });
 
   it('devuelve varias notas existentes', () => {
-    repo.create(firstNote);
-    repo.create(secondNote);
+    service.createNote(firstNote);
+    service.createNote(secondNote);
     const notes = service.listNotes();
 
     expect(notes).toHaveLength(2);
@@ -32,8 +32,8 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
   });
 
   it('devuelve varias notas en orden', () => {
-    repo.create(firstNote);
-    repo.create(secondNote);
+    service.createNote(firstNote);
+    service.createNote(secondNote);
     const notes = service.listNotes();
 
     expect(notes[0]).toHaveProperty('id', 1);
@@ -41,7 +41,7 @@ describe('NoteService - listNotes (Ejercicio 2)', () => {
   });
 
   it('devuelve notas con todas las propiedades', () => {
-    repo.create(firstNote);
+    service.createNote(firstNote);
     const notes = service.listNotes();
 
     expect(notes[0]).toHaveProperty('id');
