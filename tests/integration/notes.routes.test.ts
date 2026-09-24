@@ -3,6 +3,7 @@ import { makeApp } from '../../src/app';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { Express } from 'express';
 import { NewNote } from '../../src/models/Note';
+import { title } from 'process';
 
 describe('Notes Routes (Integration)', () => {
   let app: Express;
@@ -58,6 +59,14 @@ describe('Notes Routes (Integration)', () => {
       expect(respuesta.body).toHaveProperty('title', NewNote.title);
     });
 
+    it('PATCH: nota con id inexistente retorna 404', async () => {
+      const respuesta = await request(app).patch('/notes/100').send({title: "Título"});
+      expect(respuesta.statusCode).toBe(404);
+      expect(respuesta.body).toHaveProperty('error', 'NotFound');
+    });
+  });
+
+    describe('DELETE/notes/:id - Ejercicio 5', () => {
     it('Delete nota por id', async () => {
       const notaNueva: NewNote = { title: 'TITULO', content: 'CONTENIDO' };
       const createRespuesta = await request(app).post('/notes').send(notaNueva);
@@ -66,6 +75,12 @@ describe('Notes Routes (Integration)', () => {
       const respuesta = await request(app).delete(`/notes/${id}`);
 
       expect(respuesta.statusCode).toBe(204);
+    });
+
+    it('DELETE: nota con id inexistente retorna 404', async () =>{
+      const respuesta = (await request(app).delete('/notes/100'))
+      expect(respuesta.statusCode).toBe(404);
+      expect(respuesta.body).toHaveProperty('error', 'NotFound');
     });
   });
 });

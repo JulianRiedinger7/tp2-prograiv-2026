@@ -1,7 +1,7 @@
 import { NoteServiceImpl } from '../../src/services/NoteService';
 import { SqliteNoteRepository } from '../../src/repositories/NoteRepository';
 import { createDb } from '../../src/db/connection';
-import { NewNote } from '../../src/models/Note';
+import { NotePatch } from '../../src/models/Note';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 
@@ -16,8 +16,8 @@ describe ('noteService - updateNote (Ejercicio 4)', () => {
     });
 
     it ('Ingreso nota por id y le cambio el title', () => {
-        const newNote: NewNote = {title: 'TITULO', content: 'contenido'};
-        const notaCreada = service.createNote(newNote)
+        const newNote: NotePatch = {title: 'TITULO', content: 'contenido'};
+        const notaCreada = service.createNote(newNote);
 
         const titleNuevo = 'NUEVO TÍTULO';
         const updated = service.updateNote(notaCreada.id, {title: titleNuevo});
@@ -27,7 +27,7 @@ describe ('noteService - updateNote (Ejercicio 4)', () => {
     })
 
     it ('Ingreso nota por id y le cambio el contenido', () => {
-        const NewNote: NewNote={title: 'TITULO', content: 'CONTENT'};
+        const NewNote: NotePatch={title: 'TITULO', content: 'CONTENT'};
         const notaCreada = service.createNote(NewNote);
 
         const contenidoNuevo = 'CONTENIDO NUEVO';
